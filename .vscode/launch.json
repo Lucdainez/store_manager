@@ -1,0 +1,57 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+      "name": "Depurar local",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "program": "${workspaceFolder}/",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "Depurar com Docker",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/",
+      "remoteRoot": "/home/node/app",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+    },
+    {
+      "name": "Depurar testes local Estudante",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "test:mocha"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "Depurar testes local Trybe",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "test"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+  ],
+  "compounds": []
+}
