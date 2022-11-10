@@ -35,7 +35,7 @@ A API a ser construída é um sistema de gerenciamento de vendas no formato drop
 
 - Este projeto é individual
 - Serão `5` dias de projeto
-- Data de entrega para avaliação final do projeto: `DD/MM/YYYY 14:00h`
+- Data de entrega para avaliação regular do projeto: `30/11/2022 14:00h`
 
       <br />
 
