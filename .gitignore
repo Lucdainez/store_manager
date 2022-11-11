@@ -292,3 +292,5 @@ $RECYCLE.BIN/
 
 coverage
 .nyc*
+.vscode/settings.json
+.vscode/settings.json
