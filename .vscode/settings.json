@@ -33,5 +33,19 @@
   },
   // barrelr
   "barrelr.lineEnding": "LF",
-  "cSpell.language": "pt-BR"
+  "cSpell.language": "pt-BR",
+  "conventionalCommits.scopes": [
+    "connection.js",
+    "app.js",
+    "index dos Controllers",
+    "products.controller.js",
+    "index.js dos models",
+    "products.model.js",
+    "index.js das rotas ",
+    "products.router.js",
+    "index.js dos services",
+    "products.service.js",
+    "schema.js",
+    "validateProductsId.js"
+  ]
 }
