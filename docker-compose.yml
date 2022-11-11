@@ -45,6 +45,8 @@ services:
 
   # Serviço que irá rodar o banco de dados
   db:
+    # Caso esteja utilizando MacOS M1, descomentar a linha abaixo
+    # platform: linux/x86_64
     container_name: store_manager_db
     image: mysql:8.0.23
     environment:
