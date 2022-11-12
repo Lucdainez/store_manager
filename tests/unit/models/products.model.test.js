@@ -18,5 +18,11 @@ describe('Testes de unidades da camada model products', function () {
     const result = await productsModel.findByProductsId(1);
     expect(result).to.be.deep.equal(PRODUCT_ID);
   });
+
+  it('adicionando um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([{insertId: 4}]);
+    const result = await productsModel.insertOneProduct('produtoX')
+    expect(result).to.equal(4);
+  });
 });
 
