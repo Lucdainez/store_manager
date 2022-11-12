@@ -1,5 +1,5 @@
 const productsLayerModel = require('../models');
-const validateProductsId = require('./validations/validateProductsId');
+const { validateProductsId, validateNewProduct } = require('./validations/validateProducts');
 
 const { productsModel } = productsLayerModel;
 
@@ -17,7 +17,17 @@ const findById = async (productsId) => {
   return { type: 404, message: 'Product not found' };
 };
 
+const addProduct = async (product) => {
+  const error = validateNewProduct(product);
+  if (error.type) return error;
+
+  const newProductId = await productsModel.insertOneProduct(product);
+  const newProduct = await productsModel.findByProductsId(newProductId);
+  return { type: null, message: newProduct };
+};
+
 module.exports = {
   findAll,
   findById,
+  addProduct,
 };
