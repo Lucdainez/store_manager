@@ -6,7 +6,7 @@ chai.use(sinonChai);
 
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
-const { ALL_PRODUCTS, PRODUCT_ID } = require('./mocks/products.mock');
+const { ALL_PRODUCTS, PRODUCT_ID, ADD_NEW_PRODUCT } = require('./mocks/products.mock');
 
 describe('Teste de unidade da camada controller products', function () {
   afterEach(sinon.restore);
@@ -42,6 +42,22 @@ describe('Teste de unidade da camada controller products', function () {
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(PRODUCT_ID);
     });
+
+    it('Adicionar produto novo', async function () {
+      const res = {};
+      const req = {
+        body: { name: 'produtoX' },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'addProduct')
+        .resolves({ type: null, message: ADD_NEW_PRODUCT });
+
+      await productsController.addProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(ADD_NEW_PRODUCT);
+    });
   });
 
   describe('Teste de casos com requisição mal sucedida', function () { 
@@ -73,6 +89,22 @@ describe('Teste de unidade da camada controller products', function () {
 
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: 'error' });
+    });
+
+    it('Falha ao adicionar produto novo', async function () {
+      const res = {};
+      const req = {
+        body: { name: 'pr' },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'addProduct')
+        .resolves({ type: 422, message: "\"name\" length must be at least 5 characters long" });
+
+      await productsController.addProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(422);
+      expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
     });
   
   })
