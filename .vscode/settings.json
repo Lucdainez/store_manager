@@ -46,6 +46,8 @@
     "index.js dos services",
     "products.service.js",
     "schema.js",
-    "validateProductsId.js"
+    "validateProductsId.js",
+    "sales.controller.js",
+    "validateSales.middleware.js"
   ]
 }
