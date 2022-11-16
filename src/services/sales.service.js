@@ -33,8 +33,17 @@ const requestSaleId = async (id) => {
   return { type: 200, message: result };
 };
 
+const deleteSale = async (id) => {
+  const result = await salesModel.requestSaleId(id);
+  const { type, message } = validateSaleId(result);
+  if (type) return { type, message };
+  await salesModel.deleteSale(id);
+  return { type: 204 };
+};
+
 module.exports = {
   addSalesProducts,
   requestAllSales,
   requestSaleId,
+  deleteSale,
 };
