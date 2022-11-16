@@ -3,6 +3,7 @@ const {
   validateQuantitys,
   validateProducts,
 } = require('./validations/validateProductIdAndQuantitys');
+const validateSaleId = require('./validations/validateSalesId');
 
 const { salesModel } = salesLayerModel;
 
@@ -20,6 +21,20 @@ const addSalesProducts = async (products) => {
   return { type: null, message: result };
 };
 
+const requestAllSales = async () => {
+  const allSales = await salesModel.requestAllSales();
+  return { type: null, message: allSales };
+};
+
+const requestSaleId = async (id) => {
+  const result = await salesModel.requestSaleId(id);
+  const { type, message } = validateSaleId(result);
+  if (type) return { type, message };
+  return { type: 200, message: result };
+};
+
 module.exports = {
   addSalesProducts,
+  requestAllSales,
+  requestSaleId,
 };
