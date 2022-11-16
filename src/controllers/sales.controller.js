@@ -41,9 +41,28 @@ const deleteSale = async (req, res) => {
   return res.status(204).end();
 };
 
+const updateSale = async (req, res) => {
+  const { id } = req.params;
+  const sales = req.body;
+  const result = await validateSales(sales);
+  const successResult = result.every((status) => status === 'ok');
+  if (successResult) {
+    const { type, message } = await salesService.updateSale(Number(id), sales);
+    if (type) return res.status(type).json({ message });
+    return res.status(200).json(message);
+  }
+  if (result.includes('invalid productId')) {
+    return res.status(400).json({ message: '"productId" is required' });
+  }
+  if (result.includes('invalid quantity')) {
+    return res.status(400).json({ message: '"quantity" is required' });
+  }
+};
+
 module.exports = {
   addSales,
   requestAllSales,
   requestSaleId,
   deleteSale,
+  updateSale,
 };
