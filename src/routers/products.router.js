@@ -14,4 +14,6 @@ router.get('/:id', productsController.getProductId);
 
 router.post('/', validateNameMiddleware, productsController.addProduct);
 
+router.delete('/:id', productsController.deleteProduct);
+
 module.exports = router;
