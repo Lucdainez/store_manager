@@ -20,6 +20,22 @@ const addSales = async (req, res) => {
   }
 };
 
+const requestAllSales = async (_req, res) => {
+  const { message } = await salesService.requestAllSales();
+  return res.status(200).json(message);
+};
+
+const requestSaleId = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await salesService.requestSaleId(id);
+  if (type === 404) {
+    return res.status(type).json({ message });  
+  }
+  return res.status(type).json(message);
+};
+
 module.exports = {
   addSales,
+  requestAllSales,
+  requestSaleId,
 };
