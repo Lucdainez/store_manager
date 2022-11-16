@@ -3,7 +3,6 @@ const productsLayerModel = require('../../models');
 const { productsModel } = productsLayerModel;
 
 const validateQuantitys = (quantitys) => {
-  console.log('entrou na verificação de quantity');
   const verifyQuantitys = quantitys.map(({ quantity }) => quantity);
   if (verifyQuantitys.some((quanti) => quanti <= 0)) {
  return {
@@ -14,7 +13,6 @@ const validateQuantitys = (quantitys) => {
 };
 
 const validateProducts = async (products) => {
-  console.log('entrou na verificação de product');
   const verifyProducts = Promise.all(products.map(async ({ productId }) => {
     const verifiedProductsById = await productsModel.findByProductsId(productId);
     return verifiedProductsById;
