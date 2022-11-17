@@ -6,7 +6,13 @@ chai.use(sinonChai);
 
 const { productsService } = require('../../../src/services');
 const { productsController } = require('../../../src/controllers');
-const { ALL_PRODUCTS, PRODUCT_ID, ADD_NEW_PRODUCT } = require('./mocks/products.mock');
+const {
+  ALL_PRODUCTS,
+  PRODUCT_ID,
+  ADD_NEW_PRODUCT,
+  ALTERED_PRODUCT,
+  RETURN_PRODUCT_PARAM_QUERY_A,
+} = require('./mocks/products.mock');
 
 describe('Teste de unidade da camada controller products', function () {
   afterEach(sinon.restore);
@@ -58,6 +64,55 @@ describe('Teste de unidade da camada controller products', function () {
       expect(res.status).to.have.been.calledWith(201);
       expect(res.json).to.have.been.calledWith(ADD_NEW_PRODUCT);
     });
+    
+    it('Alterar um produto', async function () {
+      const res = {};
+      const req = {
+        body: { name: 'produtoXs' },
+        params: { id: 1 },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'setProduct')
+        .resolves({ type: null, message: ALTERED_PRODUCT });
+
+      await productsController.setProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(ALTERED_PRODUCT);
+    });
+
+    it('Deletar um produto', async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+      };
+      res.status = sinon.stub().returns(res);
+      res.end = sinon.stub().returns();
+      sinon.stub(productsService, 'deleteProduct')
+        .resolves({ type: null, message: '' });
+
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+    });
+
+    it('Requisitar um produto com parâmetro query valor = "a" ', async function () {
+      const res = {};
+      const req = {
+        query: { q: 'a' },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'searchProductQuery')
+        .resolves({ type: 200, message: RETURN_PRODUCT_PARAM_QUERY_A });
+
+      await productsController.searchProductQuery(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(RETURN_PRODUCT_PARAM_QUERY_A);
+    });
+
   });
 
   describe('Teste de casos com requisição mal sucedida', function () { 
@@ -106,6 +161,39 @@ describe('Teste de unidade da camada controller products', function () {
       expect(res.status).to.have.been.calledWith(422);
       expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
     });
-  
+    
+    it('Falha ao alterar um produto', async function () {
+      const res = {};
+      const req = {
+        body: { name: 'pr' },
+        params: { id: 1 },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'setProduct')
+        .resolves({ type: 422, message: "\"name\" length must be at least 5 characters long" });
+
+      await productsController.setProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(422);
+      expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
+    });
+
+    it('Falha ao deletar um produto', async function () {
+      const res = {};
+      const req = {
+        params: { id: 1 },
+      };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsService, 'deleteProduct')
+        .resolves({ type: 404, message: 'Product not found' });
+
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+    });
+
   })
 });
