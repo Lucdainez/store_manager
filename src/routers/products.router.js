@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get('/', productsController.listProducts);
 
+router.get('/search', productsController.searchProductQuery);
+
 router.put('/:id', validateNameMiddleware, productsController.setProduct);
 
 router.get('/:id', productsController.getProductId);
