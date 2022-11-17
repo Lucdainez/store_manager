@@ -18,7 +18,13 @@ const PRODUCT_ID = {
   name: "Martelo de Thor"
 }
 
+const ALTERED_PRODUCT = {
+  id: 4,
+  name: "produtoXs"
+}
+
 module.exports = {
   ALL_PRODUCTS,
   PRODUCT_ID,
+  ALTERED_PRODUCT,
 }
