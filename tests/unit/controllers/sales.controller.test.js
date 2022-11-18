@@ -122,11 +122,8 @@ describe('Teste de unidade da camada controller sales', function () {
       };
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
-      const result = await validateSales(BODY_UPDATE_SALE_WITHOUT_QUANTITY);
       await salesController.addSales(req, res);
 
-      expect(result).to.be.deep.equal(['ok', 'invalid quantity']);
-      expect(result.includes('invalid quantity')).to.be.deep.equal(true);
       expect(res.status).to.have.been.calledWith(400);
       expect(res.json).to.have.been.calledWith({ message: '"quantity" is required' });
     });
