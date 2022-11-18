@@ -1,6 +1,0 @@
-node_modules
-coverage
-.nyc*
-__tests__
-tests
-jest.config.js
