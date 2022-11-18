@@ -23,8 +23,14 @@ const ADD_NEW_PRODUCT = {
   name: "produtoX"
 }
 
+const ALTERED_PRODUCT = {
+  id: 4,
+  name: "produtoXs"
+}
+
 module.exports = {
   ALL_PRODUCTS,
   PRODUCT_ID,
   ADD_NEW_PRODUCT,
+  ALTERED_PRODUCT,
 }
